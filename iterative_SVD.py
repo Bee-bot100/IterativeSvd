@@ -33,29 +33,33 @@ def iterative_svd(A):
     A2 = np.dot(np.transpose(A), A)
     Q = []
     Pt = []
-    Z = []
+    Z1 = []
 
+    #Tim cac cot ma tran Q
     for _ in range(len(A1)):
         v1 = power_iteration(A1,10000)
-        if giatrikidi(A1,v1) >= 0:
-            Z.append(giatrikidi(A1,v1))
-            Q.append(v1)
+        if round(giatrikidi(A1,v1)) <= 0:
+            break
+        Z1.append(giatrikidi(A1,v1))
+        Q.append(v1)
         A1 = deflation(A1,v1)
 
-
+    #Tìm cac hang ma tran Pt
     for _ in range(len(A2)):
         v2 = power_iteration(A2,10000)
-        if giatrikidi(A2,v2) >= 0:
-            Pt.append(v2)
+        if round(giatrikidi(A2,v2)) <= 0:
+            break
+        Pt.append(v2)
         A2 = deflation(A2,v2) 
 
-    Z = np.round(np.sqrt(Z), 2)
+    #Lam tron so
+    Z1 = np.round(Z1, 2)
     Q = np.transpose(np.round(Q, 2))
     Pt = np.round(Pt,2)
 
-    print(f"Q = \n{Q}\nZ = \n{Z}\nPT =  \n{Pt}")
+    print(f"Q = \n{Q}\nZ = \n{Z1}\nPT =  \n{Pt}")
 
 
-A = np.array([[3,2,2], [2, 1 ,-4], [6, 3 ,-2], [1, 3 ,-2]])
-iterative_svd(A)
+A = np.array([[3,2,2], [2, 1 ,-4], [6, 3 ,-2], [1, 3 ,-2], [3,1,3], [0, 1 ,-1], [3, 1 ,-2], [1, 0 ,-2]])
+iterative_svd(A,0)
 
