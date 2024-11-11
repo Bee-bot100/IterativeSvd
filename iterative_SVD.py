@@ -53,13 +53,12 @@ def iterative_svd(A):
         A2 = deflation(A2,v2) 
 
     #Lam tron so
-    Z1 = np.round(Z1, 2)
+    Z1 = np.round(np.sqrt(Z1), 2)
     Q = np.transpose(np.round(Q, 2))
     Pt = np.round(Pt,2)
 
     print(f"Q = \n{Q}\nZ = \n{Z1}\nPT =  \n{Pt}")
 
 
-A = np.array([[3,2,2], [2, 1 ,-4], [6, 3 ,-2], [1, 3 ,-2], [3,1,3], [0, 1 ,-1], [3, 1 ,-2], [1, 0 ,-2]])
-iterative_svd(A,0)
+
 
