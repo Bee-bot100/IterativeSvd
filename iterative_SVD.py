@@ -33,13 +33,12 @@ def iterative_svd(A):
     A2 = np.dot(np.transpose(A), A)
     Q = []
     Pt = []
-    Z1 = []
-    Z2 = []
+    Z = []
 
     for _ in range(len(A1)):
         v1 = power_iteration(A1,10000)
         if giatrikidi(A1,v1) >= 0:
-            Z1.append(giatrikidi(A1,v1))
+            Z.append(giatrikidi(A1,v1))
             Q.append(v1)
         A1 = deflation(A1,v1)
 
@@ -48,17 +47,15 @@ def iterative_svd(A):
         v2 = power_iteration(A2,10000)
         if giatrikidi(A2,v2) >= 0:
             Pt.append(v2)
-            Z2.append(giatrikidi(A2,v2))
         A2 = deflation(A2,v2) 
 
-    Z1 = np.round(np.sqrt(Z1), 2)
-    Z2 = np.round(np.sqrt(Z2), 2)
+    Z = np.round(np.sqrt(Z), 2)
     Q = np.transpose(np.round(Q, 2))
     Pt = np.round(Pt,2)
 
-    print(f"Q = \n{Q}\nZ1 = \n{Z1}\nZ2 = \n{Z2}\nPT =  \n{Pt}")
+    print(f"Q = \n{Q}\nZ = \n{Z}\nPT =  \n{Pt}")
 
 
-A = np.array([[3,1,2], [2, 1 ,2]])
+A = np.array([[3,2,2], [2, 1 ,-4], [6, 3 ,-2], [1, 3 ,-2]])
 iterative_svd(A)
 
