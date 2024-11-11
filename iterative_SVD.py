@@ -54,7 +54,7 @@ def iterative_svd(A):
     Z1 = np.round(np.sqrt(Z1), 2)
     Z2 = np.round(np.sqrt(Z2), 2)
     Q = np.transpose(np.round(Q, 2))
-    Pt = np.array(Pt)
+    Pt = np.round(Pt,2)
 
     print(f"Q = \n{Q}\nZ1 = \n{Z1}\nZ2 = \n{Z2}\nPT =  \n{Pt}")
 
