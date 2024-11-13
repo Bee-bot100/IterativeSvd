@@ -28,6 +28,18 @@ def giatrikidi(A,v):
     x =  np.dot(np.transpose(v),np.dot(A , v))
     return x
 
+def Z_(Q,Z,P):
+    rows_Q = Q.shape[1]
+    columns_Pt = P.shape[1]
+    # Tạo ma trận không vuông toàn số 0 với kích thước mong muốn
+    non_square_matrix = np.zeros((rows_Q, columns_Pt))
+
+    #tao ma tran giatrikidi
+    for i, value in enumerate(Z):
+        if i < rows_Q and i < columns_Pt:
+            non_square_matrix[i, i] = value
+    return non_square_matrix
+
 def iterative_svd(A):
     A1 = np.dot(A, np.transpose(A))
     A2 = np.dot(np.transpose(A), A)
@@ -55,10 +67,8 @@ def iterative_svd(A):
     #Lam tron so
     Z1 = np.round(np.sqrt(Z1), 2)
     Q = np.transpose(np.round(Q, 2))
-    Pt = np.round(Pt,2)
+    P = np.transpose(np.round(Pt,2))
 
-    print(f"Q = \n{Q}\nZ = \n{Z1}\nPT =  \n{Pt}")
-
-
-
+    Z1 = Z_(Q,Z1,P)
+    return Q,Z1,P
 
