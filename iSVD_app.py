@@ -41,7 +41,6 @@ if str(row) in K:
     print("Dự đoán: ",end="")
     for i in K[str(row)]:
         print(predicted_ratings[row][i],end = "  ")
-
 else:
     print("Rated:")
     print(selectrow)
