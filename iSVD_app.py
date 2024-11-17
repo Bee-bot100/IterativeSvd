@@ -1,6 +1,19 @@
-from iterative_SVD import iterative_svd
+#from iterative_SVD import iterative_svd
 import numpy as np 
 import pandas as pd
+from scipy.sparse.linalg import svds
+
+def Z_(Q,Z,P):
+    rows_Q = Q.shape[1]
+    columns_Pt = P.shape[1]
+    # Tạo ma trận không vuông toàn số 0 với kích thước mong muốn
+    non_square_matrix = np.zeros((rows_Q, columns_Pt))
+
+    #tao ma tran giatrikidi
+    for i, value in enumerate(Z):
+        if i < rows_Q and i < columns_Pt:
+            non_square_matrix[i, i] = value
+    return non_square_matrix
 
 file = pd.read_excel("C:\\Users\\ADMIN\\OneDrive\\Desktop\\Codespace\\Python\\matrix.xlsx")
 
@@ -26,11 +39,15 @@ for i in range(matrix.shape[0]):
 rating_matrix = matrix - mean_user_rating.reshape(-1, 1)
 rating_matrix = rating_matrix.astype(float)
 
-Q,Z,P = iterative_svd(rating_matrix)
+#Phân tích iterative svd cho ma trận trên
+Q,Z,Pt = svds(rating_matrix, k = 2)
+Z = Z_(Q,Z,np.transpose(Pt))
 
 # Tái tạo ma trận xấp xỉ
-predicted_ratings = np.dot(np.dot(Q, Z), np.transpose(P)) + mean_user_rating.reshape(-1, 1)
-predicted_ratings = np.round(predicted_ratings.astype(float),2)
+predicted_ratings = np.dot(np.dot(Q, Z), Pt) + mean_user_rating.reshape(-1, 1)
+predicted_ratings = np.round(predicted_ratings.astype(float),1)
+
+#print(predicted_ratings)
 
 #Check
 inp = int(input("Nguoi dung so: "))
